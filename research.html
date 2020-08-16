@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!-- Imports needed to use the Sage cell server.-->
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage"});</script>
+<<link rel="stylesheet" type="text/css" href="https://sagecell.sagemath.org/static/sagecell_embed.css">
+
+
 <title>Elise A. Weir</title>
 <link href="research_files/main.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" href="research_files/bootstrap.css">
@@ -11,13 +18,13 @@
     <div class="row">
       <h1 class="col-sm-4"><a href="https://www.eliseweir.com/index.html">Elise A. Weir</a></h1>
       <nav class="col-sm-8 text-right">
-        <h4><a href="https://www.eliseweir.com/index.html">about</a></h4>
+
         <h4><a href="https://www.eliseweir.com/docs/weir_resume.pdf" target="_blank">resume</a></h4>
         <h4><a href="https://www.eliseweir.com/docs/weirCV.pdf" target="_blank">cv</a></h4>
         <h4><a href="https://www.eliseweir.com/research.html">research</a></h4>
         <h4><a href="https://www.eliseweir.com/teaching.html">teaching</a></h4>
         <h4><a href="https://www.eliseweir.com/hobbies.html">hobbies</a></h4>
-        <h4><a href="mailto:eliseweir@gmail.com">contact</a></h4>
+
       </nav>
     </div>
   </header>
@@ -29,6 +36,156 @@
         LinkedIn: <a href="https://www.linkedin.com/in/eliseaweir/">linkedin.com/in/eliseaweir/</a> <br> <br></p>
       <div class="col-sm-9">
         <!--Research Page Content-->
+        <h3>Programs</h3>
+
+        <li><h4><b><a href="https://github.com/eliseweir/HyperbolicTriangle">HyperbolicTriangle</a></b></h4></li>
+        <p>  For the non-expert: produces nxn matrices a, b, c that satisfy the equations a^p = b^q = c^r = abc = 1
+           and no others!<br><br>
+
+           For the expert: produces nxn faithful, irreducible representations for hyperbolic
+           triangle groups<br><center>T(p,q,r) = &lt;a,b,c|a^p = b^q = c^r = abc = 1&gt;</center><br>in PSL(n,R) by composing the holonomy
+           representation T(p,q,r) -> PSL(2,R) with the unique irreducible representation PSL(2,R) -> PSL(n,R).<br><br>
+
+           Run it from a <a href="https://www.sagemath.org/">Sagemath terminal</a>, or edit the values of p, q, r, and
+           n below to try it out in your browser!</p>
+
+<div class="sage">
+<script type="text/x-sage">
+# accept angles pi/p, pi/q, pi/r for a hyperbolic triangle and matrix dimension n
+p = 2
+q = 3
+r = 7
+n = 3
+
+import sys
+
+if p < 2 or q < 2 or r < 2:
+    sys.exit("p,q,r must be at least 2 so that angles are at most pi/2.")
+elif 1/p + 1/q + 1/r == 1:
+    sys.exit("Your T(p,q,r) triangle must be hyperbolic. You entered a Euclidean triangle.")
+elif 1/p + 1/q + 1/r >= 1:
+    sys.exit("Your T(p,q,r) triangle must be hyperbolic. You entered a spherical triangle.")
+
+if n < 2:
+    sys.exit("nxn matrices must have size at least n = 2.")
+
+class HyperTriAngle:
+    """
+    Represents an angle in a hyperbolic triangle and the side opposite that angle.
+    """
+    def __init__(self,order):
+        self.order = order
+        self.angle = pi/order
+
+def homogeneous(n,x,y):
+    """
+    Create a homogeneous degree n - 1 polynomial, e.g., f0 x^2 + f1 x y + f2 y^2 for n = 3
+    """
+    poly = 0
+    for k in range(0,n):
+        fsubk = var('f'+str(k))
+        poly += fsubk * x**(n - 1 - k) * y**k
+    return poly
+
+def irreducible(n,rep):
+    """
+    Find a representation for rep in SL(n,R) under the unique irreducible representation SL(2,R) -> SL(n,R)
+    """
+    # use the 2x2 representation rep to create a variable substitution
+    x0 = vector([x, y])* (vector([1, 0]) * rep)
+    y0 = vector([x, y])* (vector([0, 1]) * rep)
+    poly = homogeneous(n,x0,y0).expand()
+
+    # extract coefficients from the polynomial using derivatives
+    repn = Matrix(SR,n,n)
+    for i in range(0,n):
+        print('.',end="")
+        for j in range(0,n):
+            repn[i,j] = derivative(derivative(derivative(poly,var('f'+str(j))),x,n - i - 1),y,i)/(factorial(n-i-1)*factorial(i))
+
+    return repn
+
+def prettyprint(mat):
+    """
+    Print matrices to file in a format that can be copied directly into Sagemath (or similar)
+    """
+    print('[',end="")
+    # print each row
+    for i in range(0,n-1):
+        print('[',end="")
+        # print each column, separated by commas
+        for j in range (0,n-1):
+            print(str(mat[i][j]) + ', ',end="")
+        # the last entry in each row shouldn't be followed by a comma
+        print(str(mat[i][n-1]),end="")
+        print('], ',end="")
+    # the last row shouldn't end with a comma
+    print('[',end="")
+    for k in range (0,n-1):
+        print(str(mat[n-1][k]) + ', ',end="")
+    print(str(mat[n-1][n-1]),end="")
+    print(']',end="")
+    print(']\n',end="")
+
+a = HyperTriAngle(p)
+b = HyperTriAngle(q)
+c = HyperTriAngle(r)
+
+# matrices for reflection over sides opposite b and c
+b.reflection = (Matrix([[1, cos(a.angle)], [0, 1]]) * Matrix([[0, 1], [1, 0]])) * Matrix([[1, -cos(a.angle)], [0, 1]])
+c.reflection = Matrix([[-1, 0], [0, 1]])
+
+# use hyperbolic geometry to find the length of the side opposite c and use it to find the coordinate
+# along the imaginary axis
+c.length = (cos(a.angle)*cos(b.angle) + cos(c.angle))/(sin(a.angle) * sin(b.angle))
+
+
+# move along the imaginary axis from i by the length of the side opposite c
+var('y')
+sols = solve((c.length == 1 + ((0 - 0)**2 + (y - sin(a.angle))^2)/(2 * sin(a.angle) * y)),y)
+c.axis = sols[1].rhs()
+
+# find the radius and horizontal displacement from the origin of a circle making angle b with imaginary axis
+b.radius = c.axis/sin(b.angle)
+b.disp = b.radius * cos(b.angle)
+
+# use the radius and displacement to translate and scale a reflection over the unit circle
+translA = Matrix([[1, b.disp], [0, 1]])
+scaleA = Matrix([[1/sqrt(b.radius),0],[0,sqrt(b.radius)]])
+a.reflection = (~translA * ~scaleA * Matrix([[0, 1], [1, 0]]) * scaleA * translA).simplify_trig()
+
+# compose reflections over sides opposite a, b, and c to get 2x2 representations
+a.rep2x2 = b.reflection * c.reflection
+b.rep2x2 = c.reflection * a.reflection
+c.rep2x2 = a.reflection * b.reflection
+
+# use a variable substitution in homogeneous polynomials to get nxn representations from 2x2 matrices
+print("Computing a.",end='')
+a.repnxn = (irreducible(n,a.rep2x2)).simplify_full()
+print(" done.\nComputing b.",end='')
+b.repnxn = (irreducible(n,b.rep2x2)).simplify_full()
+print(" done.\nComputing c.",end='')
+c.repnxn = (irreducible(n,c.rep2x2)).simplify_full()
+print(" done.\n")
+
+# print the results, both exact and approximate, to screen
+print('Exact representations of T(p,q,r) = <a,b,c| a^p = b^q = c^r = abc = 1>:')
+print('\na = ',end='')
+prettyprint(a.repnxn)
+print('\nb = ',end='')
+prettyprint(b.repnxn)
+print('\nc = ',end='')
+prettyprint(c.repnxn)
+print('\nNumerical approximations:')
+print('\na = ',end='')
+prettyprint((a.repnxn.n()))
+print('\nb = ',end='')
+prettyprint((b.repnxn.n()))
+print('\nc = ',end='')
+prettyprint((c.repnxn.n()))
+</script>
+</div>
+
         <h3>Publications</h3>
 
             <li>E. A. Weir, <em><a href="https://trace.tennessee.edu/utk_graddiss/5089/">The dimension of the restricted Hitchin component for triangle groups</a></em>, Ph.D. thesis, University of Tennessee, 2018.</li>
