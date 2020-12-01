@@ -1,0 +1,194 @@
+$bgColor: #8B162C;
+$pink: #E42D86;
+$orange: #FAA351;
+$darkOrange: #D23719;
+$brightOrange: #EE702A;
+$textColor: white;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+a {
+  color: rgba(255,255,255,.5);
+}
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+
+.navbar-custom {
+  min-height: 100px;
+  background-color: $bgColor;
+  /* change the brand and text color */
+  .navbar-brand, .navbar-text {
+    color: rgba(255,255,255,.8);
+  }
+  /* change the link color */
+  .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+  }
+  /* change the color of active or hovered links */
+  .nav-item.active .nav-link,
+  .nav-item:hover .nav-link {
+    color: #ffffff;
+  }
+
+  img {
+    width: 75px;
+    margin-right: 1rem;
+    border-radius: 40px;
+  }
+}
+
+main {
+  margin-top: 100px;
+  color: white;
+  background-image: url("../images/bridge.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: $darkOrange;
+  background-blend-mode: soft-light;
+  min-height: calc(100vh - 160px);
+  h1 {
+    text-align: center;
+  }
+  h2 {
+    text-align: justify;
+  }
+  h3 {
+    text-align: center;
+  }
+  p {
+    text-indent: 2rem;
+  }
+  #me {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 10rem;
+      border-radius: 100%;
+    }
+  }
+  .skills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .skill {
+      background-color: white;
+      height: 90px;
+      width: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50px;
+      margin: 20px;
+      img {
+        width: 60px;
+      }
+      #CSS {
+        width: 85px;
+      }
+      #java {
+        color: #5382a1;
+        font-weight: bold;
+      }
+    }
+  }
+  
+  .card {
+    color: white;
+    background-color: black;
+    margin: 3rem auto;
+    border: 0px;
+    max-width: 400px;
+    a {
+      color: white;
+    }
+    a:hover {
+      text-decoration: none;
+      color: $brightOrange;
+    }
+    .image { 
+      position: relative; 
+      width: 100%;
+    }
+    .card-body, .card-footer {
+        background-color: $bgColor;
+        padding: 0.5rem;
+        text-align: center;
+        .card-title {
+          font-weight: bold;
+        }
+        img {
+          width: 30px;
+        }
+    }
+    .description { 
+      /*display: none;*/
+      display: flex;
+      align-items: center;
+      position: absolute; 
+      background-color: rgba(0,0,0,.8);
+      top: 0; 
+      left: 0;
+      padding: 2rem;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+  }
+}
+
+footer {
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: $bgColor;
+  color: $textColor;
+
+  #social {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    a {
+      padding-right: 15px;
+    }
+    img {
+      width: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  html {
+      font-size: 12px;
+  }
+  .navbar-brand {
+    font-size: initial;
+  }
+  span.responsive {
+    display: none;
+  }
+  #logo {
+    width: 40px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  html {
+      font-size: 20px;
+  }
+}
