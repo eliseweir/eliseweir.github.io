@@ -1,0 +1,82 @@
+html, body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* Navigation Bar */
+
+header {
+  padding: 20px 0;
+  margin: 0;
+  background-color: rgb(171, 193, 120);
+}
+
+header .row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+header h1 {
+  font-weight: 700;
+  margin: 0;
+}
+
+header nav {
+  font-size: 2em;
+  display: flex;
+  justify-content: flex-end;
+  overflow: visible;
+}
+
+header h4 {
+  padding: 0 20px;
+  margin: 0;
+}
+
+header a, header a:link, header a:visited, header a:active {
+  text-decoration: none;
+  color: black;
+}
+
+header a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+/* Main Page */
+
+
+section {
+  border: 2px solid rgb(171,193,120);
+  padding: 20px 20px;
+}
+
+
+.row {
+  font-size: 1.75rem;
+}
+
+#contact, #image {
+  text-align: center;
+  display: block;
+  padding: 0;
+}
+
+.bitethebullet {
+  list-style-type: none;
+}
+
+table .date {
+  width: 180px;
+  text-align: right;
+}
+
+
+tr td {
+  padding: 1em;
+  vertical-align: top;
+}
