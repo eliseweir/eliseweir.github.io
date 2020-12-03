@@ -32,6 +32,10 @@ a:hover {
   /* change the color of active or hovered links */
 }
 
+.navbar-custom .navbar-brand h4 {
+  margin: auto 0;
+}
+
 .navbar-custom .navbar-brand, .navbar-custom .navbar-text {
   color: rgba(255, 255, 255, 0.8);
 }
@@ -101,9 +105,24 @@ main .skills {
           justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  margin: 1rem 0;
 }
 
-main .skills .skill {
+main .skills .skill .skill-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .skills .skill .skill-link a {
+  color: white;
+}
+
+main .skills .skill .skill-img {
+  padding: 0;
   background-color: white;
   height: 90px;
   width: 90px;
@@ -117,20 +136,15 @@ main .skills .skill {
       -ms-flex-pack: center;
           justify-content: center;
   border-radius: 50px;
-  margin: 20px;
+  margin: 0 1rem;
 }
 
-main .skills .skill img {
+main .skills .skill .skill-img img {
   width: 60px;
 }
 
-main .skills .skill #CSS {
+main .skills .skill .skill-img #CSS {
   width: 85px;
-}
-
-main .skills .skill #java {
-  color: #5382a1;
-  font-weight: bold;
 }
 
 main .card {
