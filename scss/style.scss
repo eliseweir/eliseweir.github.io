@@ -58,11 +58,11 @@ a:hover {
 main {
   margin-top: 100px;
   color: white;
-  background-image: url("../images/bridge.jpg");
+  background-image: url("../images/triangle.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-color: $darkOrange;
-  background-blend-mode: soft-light;
+  background-blend-mode:color-burn;
   min-height: calc(100vh - 160px);
   h1 {
     text-align: center;
