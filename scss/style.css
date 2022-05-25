@@ -70,10 +70,6 @@ main h1 {
   text-align: center;
 }
 
-main h2 {
-  text-align: justify;
-}
-
 main h3 {
   text-align: center;
 }
@@ -229,7 +225,7 @@ footer #social img {
   width: 30px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 992px) {
   html {
     font-size: 12px;
   }
