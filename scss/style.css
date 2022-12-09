@@ -61,7 +61,7 @@ main {
   background-image: url("../images/triangle.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #D23719;
+  background-color: #333333;
   background-blend-mode: color-burn;
   min-height: calc(100vh - 160px);
 }
